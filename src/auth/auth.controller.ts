@@ -24,14 +24,12 @@ export class AuthController {
     @Post("/me")
     me(@Req() req, @Res({passthrough: true}) res):LoginResponse{
         const jwt = req.cookies["jwt"];
-        console.log("jwt is: "+jwt);
         if(jwt===jwtToken) return loginResponse;
         res.status(400);
     }
     @Post("/logout")
     logout(@Req() req, @Res({passthrough: true}) res):LogoutResponse{
         const jwt = req.cookies["jwt"];
-        console.log("jwt is: "+jwt);
         if(jwt===jwtToken) {
             res.clearCookie('jwt');
             return {result: "sucess"};
