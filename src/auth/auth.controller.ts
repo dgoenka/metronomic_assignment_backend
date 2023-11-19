@@ -16,7 +16,7 @@ export class AuthController {
     @Post("/login")
     login(@Body() loginRequestInfo:LoginRequest, @Res({ passthrough: true }) responseObj):LoginResponse{
         if((loginRequestInfo.username==="kminchelle")&&(loginRequestInfo.password==="0lelplR")){
-            responseObj.cookie('jwt', jwtToken, {httpOnly: true});
+            responseObj.cookie('jwt', jwtToken, {httpOnly: true, domain:"http://localhost:3000", sameSite:"None", maxAge: 60 * 60 * 24 * 1000,});
             return loginResponse;
         }
         responseObj.status(400);
