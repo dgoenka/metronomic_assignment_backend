@@ -10,6 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { LabsModule } from './labs/labs.module';
 import * as process from 'process';
 import { LabSchema } from './schemas/labs/lab.schema';
+import { HealthcareprovidersModule } from './healthcareproviders/healthcareproviders.module';
 
 @Module({
   imports: [
@@ -17,14 +18,19 @@ import { LabSchema } from './schemas/labs/lab.schema';
     MongooseModule.forRoot(process.env.MONGO_URL, { dbName: 'test' }),
     AuthModule,
     LabsModule,
+    HealthcareprovidersModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService, AuthService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthMiddleware)
-      .forRoutes('/auth/me', '/auth/logout', '/labs/add');
+    consumer.apply(AuthMiddleware).forRoutes(
+      '/auth/me',
+      '/auth/logout',
+      // COMMENT THE FOLLOWING LINES TO MAKE THEM
+      // '/labs/add',
+      // '/healthcareproviders/*',
+    );
   }
 }
